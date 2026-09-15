@@ -4,9 +4,11 @@
 
   position: relative;
   z-index: 1;
-  /* Trasparente: sulla Home il RibbonField fisso dà il navy (continuità
-     fino in fondo); il componente è usato solo sulla rotta home. */
-  background: transparent;
+  /* Navy pieno: il footer sta FUORI da .karma-home (quindi fuori dal
+     RibbonField) — trasparente lascia vedersi il cream del body e il
+     testo chiaro diventa illeggibile. La zona di calma in fondo al
+     campo (.kh-ribbon-field::after) rende invisibile il confine. */
+  background: #0a2545;
   color: rgba(226, 232, 229, 0.78);
   padding: 40px clamp(20px, 5vw, 64px) 32px;
   font-size: 12.5px;

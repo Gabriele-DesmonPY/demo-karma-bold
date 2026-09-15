@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 // Scroll-triggered reveal: fades/lifts content into place once, first time it enters view.
-export default function Reveal({ as: Tag = "div", className = "", delay = 0, children }) {
+export default function Reveal({ as: Tag = "div", className = "", delay = 0, style, children }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -30,7 +30,7 @@ export default function Reveal({ as: Tag = "div", className = "", delay = 0, chi
     <Tag
       ref={ref}
       className={`reveal ${visible ? "reveal--visible" : ""} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ ...style, transitionDelay: `${delay}ms` }}
     >
       {children}
     </Tag>

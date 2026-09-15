@@ -198,8 +198,8 @@ export default function Home() {
          3 — DECIDERE È TENERE INSIEME
          Il filo lega le cose.
          ═══════════════════════════════════════════════════════════════ */}
-      <section className="kh-sec-enter kh-sec kh-grad-cn kh-grad-close" style={{ "--fade-a": "58%", "--fade-b": "82%" }}>
-        <SilkWash a={4} b={16} c={42} d={68} />
+      <section className="kh-sec-enter kh-sec kh-grad-cn kh-grad-close" style={{ paddingBottom: 40 }}>
+        <SilkWash a={4} b={14} c={30} d={46} />
         <div className="kh-col">
           <LineReveal as="h2" className="kh-h2">
             Decidere è tenere insieme.
@@ -217,7 +217,7 @@ export default function Home() {
               nella stessa trama. Una decisione la attraversa e contribuisce a trasformarla.
             </Reveal>
           </div>
-          <Reveal as="p" className="kh-body kh-body--oncream" delay={100} style={{ margin: "44px 0 60px", maxWidth: "56ch" }}>
+          <Reveal as="p" className="kh-body kh-body--oncream" delay={100} style={{ margin: "44px 0 150px", maxWidth: "56ch" }}>
             Karma accompagna chi decide a leggere queste connessioni, attraversarne le
             conseguenze e riconoscere la direzione coerente con la propria realtà.
           </Reveal>
@@ -232,7 +232,7 @@ export default function Home() {
          Il filo si ferma. Un momento di riflessione.
          ═══════════════════════════════════════════════════════════════ */}
       <section className="kh-sec-enter kh-sec kh-grad-nc kh-grad-open kh-question" style={{ "--fade-a": "10%", "--fade-b": "18%" }}>
-        <SilkWash a={16} b={32} c={86} d={98} />
+        <SilkWash a={42} b={54} c={86} d={98} />
         <div className="kh-question__inner">
           <Reveal as="div" className="kh-eyebrow" style={{ color: "var(--kh-gold-deep)" }}>
             Il discernimento abita qui

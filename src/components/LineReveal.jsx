@@ -7,6 +7,7 @@ export default function LineReveal({
   delay = 0,
   className = "",
   lineClassName = "",
+  style,
 }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -51,7 +52,7 @@ export default function LineReveal({
     <Tag
       ref={ref}
       className={`line-reveal ${className}`}
-      style={{ "--line-reveal-delay": `${delay}ms` }}
+      style={{ "--line-reveal-delay": `${delay}ms`, ...style }}
     >
       {lines.map((line, i) => (
         <span key={i} className={`line-reveal__line ${lineClassName}`}>

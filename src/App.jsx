@@ -40,7 +40,9 @@ export default function App() {
       <Preloader />
       <FilmGrain />
       <ScrollToTop />
-      {isHome && <HomeHeader />}
+      {/* HomeHeader rimosso: duplicava la Nav sovrapponendoci brand e CTA
+          "CONOSCIAMOCI" sopra il bottone INIZIAMO. La Nav copre tutte le
+          rotte, home inclusa. */}
       <Nav />
       <main>
         <PageTransition>

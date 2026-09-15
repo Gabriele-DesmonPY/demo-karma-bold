@@ -165,5 +165,9 @@ export default function RibbonField({ className = "", flatBase = false, intensit
     };
   }, []);
 
-  return <canvas ref={canvasRef} className={`kh-ribbon ${className}`} aria-hidden="true" />;
+  return (
+    <div className="kh-ribbon-field" aria-hidden="true">
+      <canvas ref={canvasRef} className={`kh-ribbon ${className}`} />
+    </div>
+  );
 }

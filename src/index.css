@@ -84,6 +84,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Nessuno scroll orizzontale a livello documento: ogni elemento più
+   largo del viewport (decorazioni assolute, spirali grandi) viene
+   clipppato senza creare scrollbar. */
+html,
+body {
+  overflow-x: clip;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
