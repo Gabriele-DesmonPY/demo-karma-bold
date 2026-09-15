@@ -1,0 +1,91 @@
+.orbit-ring {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.orbit-ring__guides {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.orbit-ring__center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(9px, 1.05vw, 12px);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--kh-gold-deep);
+  white-space: nowrap;
+}
+
+.orbit-ring__spin {
+  position: absolute;
+  inset: 0;
+  animation-name: orbit-ring-spin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes orbit-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orbit-ring__slot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.orbit-ring__counter {
+  animation-name: orbit-ring-spin-rev;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes orbit-ring-spin-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.orbit-ring__label {
+  display: block;
+  font-family: var(--font-label);
+  font-size: clamp(8px, 1vw, 10.5px);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--kh-ink);
+  white-space: nowrap;
+}
+
+.orbit-ring__label--accent {
+  color: var(--kh-gold-deep);
+}
+
+/* Variante "mappa": etichette su fondo navy con pillola piena (leggibili
+   sopra la spirale/i cerchi guida, come nel riferimento), non semplice
+   testo colorato. */
+.orbit-ring--map .orbit-ring__label {
+  background: var(--kh-navy);
+  padding: 3px 7px;
+  color: rgba(220, 226, 223, 0.9);
+}
+
+.orbit-ring--map .orbit-ring__label--accent {
+  color: var(--kh-gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring__spin,
+  .orbit-ring__counter {
+    animation: none;
+  }
+}

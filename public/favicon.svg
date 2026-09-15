@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Logo ufficiale "K in riquadro": quadrato con bordo sottile + lettera K tipografica. Nessuna spirale. -->
+  <rect width="64" height="64" rx="10" fill="#0B213B"/>
+  <rect x="13" y="13" width="38" height="38" fill="none" stroke="#C7A15A" stroke-width="1.5"/>
+  <g stroke="#FAF8F4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M25 19.5v25"/>
+    <path d="M25 32 39 19.5"/>
+    <path d="M25 32 39 44.5"/>
+  </g>
+</svg>

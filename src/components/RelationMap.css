@@ -1,0 +1,71 @@
+/* Mappa relazionale (Karmaround). Le pillole riusano esattamente il
+   motivo di .capabilities__link-label (stesso sfondo/bordo/oro) — lo
+   stesso segno grafico per lo stesso concetto ("collegamento tra parti")
+   in due punti del sito, non due linguaggi diversi. */
+.relation-map {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1 / 1;
+}
+
+.relation-map__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.relation-map__line {
+  fill: none;
+  stroke: var(--gold-deep);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  transition: opacity 550ms var(--ease-snap);
+}
+
+.relation-map.reveal--visible .relation-map__line {
+  opacity: 0.4;
+}
+
+.relation-map__nodes {
+  position: absolute;
+  inset: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.relation-map__node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--navy);
+  white-space: nowrap;
+  background: rgba(198, 154, 87, 0.14);
+  border: 1px solid rgba(198, 154, 87, 0.4);
+  border-radius: 999px;
+  padding: 7px 14px;
+  opacity: 0;
+  transition: opacity 420ms var(--ease-snap);
+}
+
+.relation-map.reveal--visible .relation-map__node {
+  opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .relation-map {
+    max-width: 340px;
+  }
+  .relation-map__node {
+    font-size: 9.5px;
+    padding: 5px 8px;
+  }
+}

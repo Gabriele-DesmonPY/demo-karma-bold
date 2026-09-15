@@ -1,0 +1,149 @@
+/* Ingresso animato — mosaico a 7 riquadri che si ingrandisce durante
+   300vh di scroll fino a coprire l'intero schermo (principio del
+   componente di riferimento, portato in vanilla JS/CSS). Contenitore alto
+   con uno stage sticky a piena altezza; ogni riquadro ha una propria
+   posizione di partenza e una propria velocità di scala — non un trittico
+   calmo, un vero mosaico che si apre. In stato statico (reduced-motion o
+   mobile) il contenitore torna alto quanto il suo contenuto, disposto in
+   una griglia piccola e ferma. */
+.zpv {
+  position: relative;
+  height: 300vh;
+  background: var(--navy);
+}
+
+.zpv--static {
+  height: auto;
+}
+
+.zpv__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy);
+}
+
+.zpv--static .zpv__stage {
+  position: relative;
+  height: auto;
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-3);
+}
+
+/* ---------- Overlay centrato ----------
+   La headline vive dentro al mosaico, non più in una sezione a parte
+   prima ("zp-lead", eliminata): centrata, sopra ai riquadri, con un
+   leggero velo scuro dietro per restare leggibile qualunque riquadro le
+   passi dietro. Piena per il primo ~45% dello scroll, poi si dissolve
+   (opacity + leggero translateY verso l'alto, calcolati in JS) man mano
+   che i riquadri crescono abbastanza da coprire lo schermo — il riquadro
+   duotono finale deve restare pulito, senza testo sopra. */
+.zpv__overlay {
+  position: relative;
+  z-index: 5;
+  max-width: 640px;
+  margin-inline: auto;
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.zpv--static .zpv__overlay {
+  max-width: 480px;
+  padding: 0;
+  margin-bottom: var(--space-3);
+}
+
+.zpv__overlay-eyebrow {
+  color: var(--gold);
+  margin: 0 0 var(--space-3);
+}
+
+.zpv__overlay-headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-hero);
+  line-height: 1.15;
+  letter-spacing: var(--tracking-display);
+  color: var(--white);
+  margin: 0 0 var(--space-3);
+}
+
+.zpv-frame {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.zpv-frame__inner {
+  position: relative;
+  height: 25vh;
+  width: 25vw;
+  overflow: hidden;
+  background: var(--navy-soft);
+  border-radius: 2px;
+}
+
+.zpv-frame__inner img,
+.zpv-frame__inner video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- Mobile: due immagini, non un mosaico ----------
+   Sequenza a due tempi invece della griglia di 7 riquadri: il marchio
+   (poster del video f0, stesso momento di brand del desktop) seguito da una
+   foto delle persone, leggermente sfalsata per non leggere come una coppia
+   simmetrica di card. Ogni riquadro entra con un fade/lift singolo
+   (Reveal), non un loop continuo — coerente con "pochi effetti fatti bene"
+   e con l'assenza voluta di WaveField animato su questa larghezza. */
+.zpv-mobile {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.zpv-mobile__frame {
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--navy-soft);
+  border: 1px solid rgba(198, 154, 87, 0.25);
+}
+
+.zpv-mobile__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.zpv-mobile__frame--lead {
+  aspect-ratio: 4 / 5;
+  width: 78%;
+  margin-inline: 0 auto;
+}
+
+.zpv-mobile__frame--secondary {
+  aspect-ratio: 3 / 2;
+  width: 62%;
+  margin-inline: auto 0;
+}
+

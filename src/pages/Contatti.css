@@ -1,0 +1,144 @@
+.contact-hero {
+  position: relative;
+  background: var(--navy);
+  overflow: hidden;
+  padding-block: var(--space-6);
+}
+
+.contact-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 820px;
+}
+
+.contact-hero__eyebrow {
+  color: var(--gold);
+  margin: 0 0 var(--space-2);
+}
+
+.contact-hero__headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-page-hero);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  color: var(--white);
+  margin: 0 0 var(--space-3);
+}
+
+.contact-hero__lede {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 56ch;
+  margin: 0 0 var(--space-4);
+}
+
+.contact-hero__details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.contact-hero__link {
+  font-family: var(--font-label);
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: var(--gold);
+  border-bottom: 2px solid var(--gold);
+  transition: color var(--dur-fast) var(--ease-snap), border-color var(--dur-fast) var(--ease-snap);
+}
+
+.contact-hero__link:hover {
+  color: var(--gold-bright);
+  border-color: var(--gold-bright);
+}
+
+.contact-hero__domain {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--muted-on-dark);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Cards ---------- */
+.contact-cards {
+  background: var(--white);
+  padding-block: var(--space-6);
+}
+
+.contact-cards__grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+/* .card + .card--surface (index.css) forniscono padding, bordo superiore,
+   gerarchia testo e hover: qui restano solo le proprietà specifiche di
+   questa card (titolo leggermente più grande, testo che riempie lo
+   spazio, elementi extra come bottone/nota). */
+.contact-card .card__title {
+  font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+}
+
+.contact-card__text {
+  flex-grow: 1;
+}
+
+.contact-card__btn {
+  align-self: flex-start;
+}
+
+.contact-card__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.contact-card__note {
+  font-family: var(--font-label);
+  font-size: 12px;
+  color: var(--muted-on-dark);
+  margin: 0;
+}
+
+.contact-card__success {
+  font-family: var(--font-label);
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0;
+}
+
+.contact-card__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.contact-card__input {
+  flex: 1 1 200px;
+  padding: 14px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  color: var(--white);
+  font-family: var(--font-body);
+  /* 16px minimo: sotto questa soglia Safari iOS zooma automaticamente
+     sull'input al focus — su telefono si sentiva come uno scatto brusco. */
+  font-size: 16px;
+  transition: border-color var(--dur-fast) var(--ease-snap);
+}
+
+.contact-card__input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.contact-card__input:focus-visible {
+  border-color: var(--gold);
+}
+
+@media (min-width: 768px) {
+  .contact-cards__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

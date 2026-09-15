@@ -1,0 +1,369 @@
+.approach-hero {
+  position: relative;
+  background: var(--navy);
+  overflow: hidden;
+  padding-block: var(--space-6);
+}
+
+.approach-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+.approach-hero__eyebrow {
+  color: var(--gold);
+  margin: 0 0 var(--space-2);
+}
+
+.approach-hero__headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-page-hero);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  color: var(--white);
+  margin: 0 0 var(--space-3);
+}
+
+.approach-hero__lede {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 62ch;
+  margin: 0;
+}
+
+/* ---------- Guide photo band ---------- */
+.guide {
+  background: var(--light);
+  overflow: hidden;
+}
+
+.guide__grid {
+  display: flex;
+  align-items: stretch;
+  min-height: 420px;
+}
+
+.guide__text {
+  flex: 1 1 56%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: var(--space-5);
+}
+
+.guide__eyebrow {
+  color: var(--muted);
+}
+
+.guide__statement {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+  line-height: 1.4;
+  color: var(--navy);
+  max-width: 46ch;
+  margin: var(--space-2) 0 0;
+}
+
+.guide__photo {
+  flex: 0 0 40%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Trattamento editoriale: duotone navy + hairline crema inset,
+   stesso linguaggio della cornice foto della Home */
+.guide__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    200deg,
+    rgba(10, 37, 69, 0.42),
+    transparent 42%,
+    rgba(10, 37, 69, 0.3)
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.guide__photo::before {
+  content: "";
+  position: absolute;
+  inset: clamp(12px, 1.8vw, 22px);
+  z-index: 2;
+  border: 1px solid rgba(250, 248, 244, 0.3);
+  pointer-events: none;
+}
+
+/* ImageReveal avvolge l'img: deve riempire la colonna come il img assoluto */
+.guide__photo .image-reveal {
+  position: absolute;
+  inset: 0;
+}
+
+.guide__photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.guide__photo:hover img {
+  transform: scale(1.03);
+}
+
+@media (max-width: 900px) {
+  .guide__grid {
+    flex-direction: column;
+    min-height: 0;
+  }
+  .guide__photo {
+    flex: 0 0 auto;
+    height: 320px;
+  }
+}
+
+/* ---------- La mappa interconnessa ----------
+   Sezione principale della pagina, fondo pieno navy come l'hero — ma tra i
+   due non c'è adiacenza diretta (in mezzo c'è "Sul campo", chiara), quindi
+   l'alternanza forte/calmo del resto del sito resta rispettata. Layout
+   asimmetrico (figura a sinistra, testo stretto a destra) invece del
+   blocco centrato iniziale — stessa ricetta già stabilita in Home per
+   Metodo (grafico + colonna di testo stretta), qui speculare per varietà
+   visiva rispetto a "Sul campo" appena sopra (che ha la foto a destra). */
+.karma-map {
+  background: var(--navy);
+  padding-block: var(--space-6);
+}
+
+.karma-map__grid {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.karma-map__figure {
+  min-width: 0;
+  order: -1;
+}
+
+.karma-map__text {
+  max-width: 420px;
+}
+
+.karma-map__eyebrow {
+  color: var(--gold);
+  margin: 0 0 var(--space-2);
+}
+
+.karma-map__intro {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  line-height: 1.5;
+  color: var(--white);
+  margin: 0 0 var(--space-2);
+}
+
+.karma-map__hint {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .karma-map__grid {
+    grid-template-columns: 1fr minmax(260px, 340px);
+  }
+  .karma-map__figure {
+    grid-column: 1;
+    grid-row: 1;
+    order: 0;
+  }
+  .karma-map__text {
+    grid-column: 2;
+    grid-row: 1;
+    padding-top: var(--space-3);
+  }
+}
+
+/* ---------- Cinque regole operative ----------
+   Fondo chiaro, righe numerate — stesso motivo già stabilito in Home per
+   la sezione Karmaround (numerarle qui non contraddice nulla: sono un
+   ordine reale di lavoro, non un insieme non gerarchico come i nodi della
+   mappa sopra). */
+.approach-rules {
+  background: var(--white);
+  padding-block: var(--space-6);
+}
+
+.approach-rules__inner {
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.approach-rules__eyebrow {
+  color: var(--muted);
+  margin: 0 0 var(--space-2);
+}
+
+.approach-rules__headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-h2);
+  line-height: 1.15;
+  letter-spacing: var(--tracking-h2);
+  color: var(--navy);
+  margin: 0 0 var(--space-5);
+  text-wrap: balance;
+}
+
+.approach-rules__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.approach-rule {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid rgba(10, 37, 69, 0.12);
+}
+
+.approach-rule:first-child {
+  border-top: 1px solid rgba(10, 37, 69, 0.12);
+}
+
+.approach-rule__num {
+  flex-shrink: 0;
+  width: 34px;
+  padding-top: 2px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--gold-deep);
+}
+
+.approach-rule__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--navy);
+  margin: 0 0 4px;
+}
+
+.approach-rule__text {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* ---------- In quali situazioni ----------
+   Non più una seconda colonna centrata identica alle regole appena sopra
+   (le due si leggevano come "due liste una dopo l'altra"): titolo in una
+   colonna stretta a sinistra, elenco a due colonne largo a destra —
+   stesso principio "colonna stretta + area larga" già usato altrove
+   (Metodo in Home), ma qui applicato a un titolo+lista invece che a un
+   grafico+testo, per non ripetere la stessa combinazione appena vista
+   nella mappa qui sopra. Bordo oro superiore come marcatore di passaggio
+   (stesso segno di .photo-band/.method), perché altrimenti due sezioni a
+   fondo chiaro/bianco di fila restano indistinguibili. Elenco senza box
+   rigidi — un trattino verticale oro accanto al testo, non righe
+   separate da un filo. */
+.approach-situations {
+  background: var(--light);
+  padding-block: var(--space-6);
+  border-top: 2px solid var(--gold);
+}
+
+.approach-situations__grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.approach-situations__lead {
+  max-width: 320px;
+}
+
+.approach-situations__eyebrow {
+  color: var(--muted);
+  margin: 0 0 var(--space-2);
+}
+
+.approach-situations__headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-h2);
+  line-height: 1.15;
+  letter-spacing: var(--tracking-h2);
+  color: var(--navy);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.approach-situations__list {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-4) 0 0;
+  display: grid;
+  gap: var(--space-4) var(--space-5);
+}
+
+.approach-situations__item {
+  position: relative;
+  padding-left: var(--space-3);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.approach-situations__item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.35em;
+  bottom: 0.35em;
+  width: 2px;
+  background: var(--gold-deep);
+}
+
+@media (min-width: 900px) {
+  .approach-situations__grid {
+    grid-template-columns: minmax(230px, 320px) 1fr;
+    align-items: start;
+  }
+  .approach-situations__list {
+    grid-template-columns: 1fr 1fr;
+    padding-top: 6px;
+  }
+}
+
+/* ---------- CTA finale ----------
+   Alta intensità (fondo pieno navy), come l'hero e come la CTA finale di
+   Home: un solo bottone primario (oro pieno) per sezione. */
+.approach-cta {
+  background: var(--navy);
+  padding-block: var(--space-6);
+  text-align: center;
+}
+
+.approach-cta__headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-h2);
+  letter-spacing: var(--tracking-h2);
+  color: var(--white);
+  margin: 0 0 var(--space-4);
+  text-wrap: balance;
+}

@@ -1,0 +1,137 @@
+.section-index {
+  width: 100%;
+  max-width: 420px;
+}
+
+.section-index__row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(10, 37, 69, 0.12);
+}
+
+.section-index__row:first-child {
+  border-top: 1px solid rgba(10, 37, 69, 0.12);
+}
+
+.section-index__num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(24px, 2.6vw, 30px);
+  color: var(--gold-deep);
+  width: 50px;
+  flex-shrink: 0;
+}
+
+@supports (-webkit-text-stroke: 1px black) {
+  .section-index__num {
+    color: transparent;
+    -webkit-text-stroke: 1.2px var(--gold-deep);
+  }
+}
+
+.section-index__label {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(16px, 1.6vw, 19px);
+  letter-spacing: 0.01em;
+  color: var(--navy);
+}
+
+/* ---------- Variante timeline (Metodo) ----------
+   Una linea verticale continua sostituisce le righe piatte: comunica
+   sequenza/progressione invece di un insieme non ordinato. */
+.section-index--timeline {
+  position: relative;
+  padding-left: 4px;
+}
+
+.section-index__rows {
+  position: relative;
+}
+
+.section-index__loop-svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.section-index__loop-path {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.6;
+  opacity: 0.6;
+}
+
+.section-index__loop-arrowhead {
+  fill: var(--gold);
+}
+
+.section-index--timeline .section-index__spine {
+  position: absolute;
+  left: 13px;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  background: var(--gold-deep);
+  opacity: 0.4;
+}
+
+.section-index--timeline .section-index__row {
+  border: none;
+  padding: 11px 0;
+  gap: 12px;
+  align-items: center;
+}
+
+.section-index--timeline .section-index__row:first-child {
+  border: none;
+}
+
+.section-index--timeline .section-index__gutter {
+  position: relative;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.section-index--timeline .section-index__dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  flex-shrink: 0;
+}
+
+.section-index--timeline .section-index__num {
+  width: 32px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--gold-deep);
+}
+
+@supports (-webkit-text-stroke: 1px black) {
+  .section-index--timeline .section-index__num {
+    color: var(--gold-deep);
+    -webkit-text-stroke: 0;
+  }
+}
+
+.section-index__loop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: var(--space-2) 0 0;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--gold-deep);
+}
+
+.section-index__loop svg {
+  flex-shrink: 0;
+  color: var(--gold-deep);
+}

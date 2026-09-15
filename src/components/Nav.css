@@ -1,0 +1,162 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--navy);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-med) var(--ease-snap), box-shadow var(--dur-med) var(--ease-snap);
+}
+
+.nav--scrolled {
+  border-bottom-color: rgba(198, 154, 87, 0.35);
+  box-shadow: 0 12px 30px -18px rgba(0, 0, 0, 0.6);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+}
+
+.nav__logo {
+  transition: opacity var(--dur-fast) var(--ease-snap);
+}
+
+.nav__logo:hover {
+  opacity: 0.82;
+}
+
+.nav__links {
+  display: none;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.nav__link {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--white);
+  position: relative;
+  padding-block: 6px;
+}
+
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: var(--gold);
+  transition: width var(--dur-fast) var(--ease-snap);
+}
+
+.nav__link:hover::after,
+.nav__link.is-active::after {
+  width: 100%;
+}
+
+.nav__link.is-active {
+  color: var(--gold);
+}
+
+.nav__cta {
+  padding: 12px 24px;
+  font-size: 13px;
+}
+
+/* Bottone a piena area di tocco (44×44, soglia minima per il tap su
+   mobile): l'icona resta visivamente compatta, centrata dentro un'area
+   cliccabile più generosa di quella disegnata. */
+.nav__burger {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav__burger span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background: var(--white);
+  transition: transform var(--dur-fast) var(--ease-snap), opacity var(--dur-fast) var(--ease-snap);
+}
+
+.nav__burger.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav__burger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+.nav__burger.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Apertura/chiusura del menu mobile con una transizione vera (era uno
+   scatto secco display:none/flex): il wrapper anima grid-template-rows
+   da 0fr a 1fr, la riga interna si adatta al contenuto senza bisogno di
+   indovinare un'altezza massima. Tecnica solo-CSS, degrada in sicurezza
+   (mostra/nasconde comunque) sui motori che non la supportano. */
+.nav__mobile-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  background: var(--navy);
+  border-top: 1px solid transparent;
+  transition: grid-template-rows var(--dur-med) var(--ease-snap), border-color var(--dur-med) var(--ease-snap);
+}
+
+.nav__mobile-wrap.is-open {
+  grid-template-rows: 1fr;
+  border-top-color: rgba(198, 154, 87, 0.25);
+}
+
+.nav__mobile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0 var(--space-3);
+  overflow: hidden;
+  min-height: 0;
+  transition: padding var(--dur-med) var(--ease-snap);
+}
+
+.nav__mobile-wrap.is-open .nav__mobile {
+  padding: var(--space-3) var(--space-3) var(--space-5);
+}
+
+.nav__mobile-link {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.nav__mobile-link.is-active {
+  color: var(--gold);
+}
+
+@media (min-width: 1024px) {
+  .nav__links {
+    display: flex;
+  }
+  .nav__burger {
+    display: none;
+  }
+  .nav__mobile-wrap {
+    display: none !important;
+  }
+}

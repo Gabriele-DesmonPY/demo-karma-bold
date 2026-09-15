@@ -1,0 +1,10 @@
+# Dipendenze
+node_modules/
+
+# Build
+dist/
+.vercel/
+
+# Sistema/editor
+.DS_Store
+*.log

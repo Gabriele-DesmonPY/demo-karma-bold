@@ -1,0 +1,24 @@
+﻿.home-footer {
+  --kh-navy: #0a2545;
+  --kh-cream: #faf8f4;
+
+  position: relative;
+  z-index: 1;
+  background: var(--kh-navy);
+  color: rgba(220, 226, 223, 0.45);
+  padding: 28px clamp(20px, 5vw, 64px);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.home-footer__inner {
+  max-width: 1180px;
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px solid rgba(220, 226, 223, 0.16);
+  padding-top: 28px;
+}

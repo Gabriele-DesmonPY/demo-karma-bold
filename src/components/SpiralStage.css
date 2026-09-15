@@ -1,0 +1,122 @@
+.spiral-stage {
+  position: relative;
+}
+
+.spiral-stage__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.spiral-stage__spiral-wrap {
+  position: absolute;
+  inset: -18%;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.spiral-stage__spin {
+  width: 100%;
+  height: 100%;
+  animation-name: spiral-stage-spin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes spiral-stage-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spiral-stage__spiral {
+  width: 100%;
+  height: 100%;
+}
+
+.spiral-stage__dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--kh-gold);
+  animation: spiral-stage-breathe 7s ease-in-out infinite;
+}
+
+@keyframes spiral-stage-breathe {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+.spiral-stage__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding-inline: var(--space-3);
+  width: 100%;
+  max-width: 780px;
+}
+
+.spiral-stage__item {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  /* L'opacità/trasformazione è guidata dallo scroll via JS: la transizione
+     fa sì che il valore "insegua" il target con un easing morbido — la
+     parola entra e esce con un'animazione percepita, non un'incollatura
+     lineare al pixel dello scroll. */
+  transition:
+    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Il primo item resta nel flusso normale (non absolute) per dare al
+   contenitore un'altezza reale — gli altri si sovrappongono sopra di lui,
+   stessa tecnica del riferimento (inset:0 su ognuno, un solo overlay). */
+.spiral-stage__content > .spiral-stage__item:first-child {
+  position: relative;
+}
+
+@media (max-width: 640px) {
+  .spiral-stage__pin {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    padding-block: var(--space-rhythm);
+  }
+
+  .spiral-stage__spiral-wrap {
+    inset: -10%;
+    opacity: 0.35;
+  }
+
+  .spiral-stage__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: center;
+    padding-inline: var(--space-3);
+  }
+
+  .spiral-stage__item {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spiral-stage__spin {
+    animation: none;
+  }
+}

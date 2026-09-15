@@ -1,0 +1,46 @@
+/* Sfondo a nastri animato (vedi WaveField.jsx) — riempie sempre il suo
+   contenitore posizionato (relative/sticky), sta dietro a tutto il resto
+   del contenuto grazie all'ordine nel DOM (nessun z-index esplicito
+   necessario: basta essere il primo figlio). */
+.wave-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* Il navy pieno di ".zpv__stage" resta sotto e traspare: l'onda non
+     deve sostituire il fondo navy del brand, deve muoverglisi sopra come
+     un riflesso — oltre a restare fedele all'originale (che infatti non
+     doveva garantire leggibilità per un testo bianco sopra), qui serve a
+     mantenere il contrasto per l'headline e l'eyebrow in overlay. */
+  opacity: 0.55;
+}
+
+.wave-field__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* Sfocatura: ammorbidisce i confini netti fra le bande (dove prima si
+     vedevano i pixel/il gradino) e dà all'onda l'aspetto morbido, non un
+     poster a bande dure. scale(1.06) allarga leggermente il canvas oltre
+     il bordo del contenitore (che ha overflow:hidden) — la sfocatura
+     schiarisce/affievolisce il proprio bordo esterno (non c'è altro
+     pixel oltre da mescolare), lo scale nasconde quella frangia oltre il
+     ritaglio invece di lasciarla visibile lungo il perimetro. */
+  filter: blur(22px);
+  transform: scale(1.06);
+}
+
+/* Grana sottile in overlay, statica (non riesegue ad ogni frame — costa
+   zero oltre al primo paint): stesso trucco SVG feTurbulence usato
+   dall'approssimazione CSS del riferimento, per rompere il gradiente
+   piatto e restituire una texture, non una banda di colore pulita. */
+.wave-field__grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  mix-blend-mode: overlay;
+  opacity: 0.35;
+}

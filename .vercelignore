@@ -1,0 +1,13 @@
+# Esclude dal pacchetto caricato ad ogni `vercel deploy` tutto ciò che non
+# serve alla build del sito (Vite legge solo src/ e public/): backup e
+# note di lavoro lasciati nella cartella del progetto. Circa 95MB in meno
+# caricati ad ogni deploy, indipendentemente dal fatto che la cartella sia
+# anche un repository git.
+karma.zip
+Claude outputs/
+
+# Standard: mai caricare l'installazione locale o la build precedente,
+# Vercel la rigenera da zero ad ogni deploy.
+node_modules
+dist
+.env*

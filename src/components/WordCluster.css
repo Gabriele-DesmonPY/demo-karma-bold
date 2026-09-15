@@ -1,0 +1,129 @@
+/* WordCluster — un insieme non ordinato di voci, mai una gerarchia a nodi/
+   linee (vedi WordCluster.jsx per il perché). Stessa struttura markup per
+   tutte le varianti: un centro opzionale (.word-cluster__center) + una
+   lista che si dispone a bandiera, centrata, con wrap libero — è il
+   contenuto (quante parole, quanto lunghe, se c'è un centro) a cambiare
+   voce, non il componente. */
+.word-cluster {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.word-cluster__center {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  line-height: 1;
+  color: var(--gold);
+}
+
+.word-cluster__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.55em 1.1em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 46em;
+}
+
+/* La lista intera non anima (viene liberata dal reset globale di .reveal
+   più sotto): sono le singole voci ad apparire in stagger, guidate dalla
+   classe "reveal--visible" che Reveal applica al contenitore — non da un
+   IntersectionObserver per parola. */
+.word-cluster__list {
+  opacity: 1;
+  transform: none;
+}
+
+.word-cluster__item {
+  font-family: var(--font-label);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--dur-med) var(--ease-snap), transform var(--dur-med) var(--ease-snap);
+}
+
+.word-cluster__list.reveal--visible .word-cluster__item {
+  opacity: 1;
+  transform: none;
+}
+
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(1) { transition-delay: 0ms; }
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(2) { transition-delay: 40ms; }
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(3) { transition-delay: 80ms; }
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(4) { transition-delay: 120ms; }
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(5) { transition-delay: 160ms; }
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(6) { transition-delay: 200ms; }
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(7) { transition-delay: 240ms; }
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(8) { transition-delay: 280ms; }
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(9) { transition-delay: 320ms; }
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(10) { transition-delay: 360ms; }
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(11) { transition-delay: 400ms; }
+.word-cluster__list.reveal--visible .word-cluster__item:nth-child(12) { transition-delay: 440ms; }
+
+/* ---------- Varianti ----------
+   "ambient": le parole di sfondo dell'hero — piccole, discrete, sul navy,
+   nessun centro. Non compete con l'headline, resta un ambiente.
+   "verbs": i nove verbi di "Entrare nella spirale" — più grandi, in oro,
+   separate da un punto medio invece di un semplice spazio: si leggono come
+   un unico gesto che si scompone in tempi.
+   "identity"/"competenze"/"mappa": un centro forte (font-accent, corsivo,
+   oro) circondato dalle voci — stesso linguaggio, contenuto diverso. */
+.word-cluster--ambient .word-cluster__list {
+  max-width: 64em;
+  gap: 0.5em 1.4em;
+}
+
+.word-cluster--ambient .word-cluster__item {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: rgba(250, 248, 244, 0.34);
+}
+
+.word-cluster--verbs .word-cluster__item {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: clamp(1.05rem, 2vw, 1.5rem);
+  color: var(--gold-deep);
+}
+
+.word-cluster--verbs .word-cluster__item:not(:last-child)::after {
+  content: "·";
+  margin-left: 1.1em;
+  color: rgba(198, 154, 87, 0.4);
+}
+
+.word-cluster--identity .word-cluster__item,
+.word-cluster--competenze .word-cluster__item,
+.word-cluster--mappa .word-cluster__item {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.word-cluster--competenze .word-cluster__item,
+.word-cluster--mappa .word-cluster__item {
+  padding: 7px 14px;
+  border: 1px solid rgba(10, 37, 69, 0.16);
+  border-radius: 999px;
+}
+
+@media (max-width: 640px) {
+  .word-cluster__center {
+    font-size: 1.7rem;
+  }
+  .word-cluster--ambient {
+    display: none;
+  }
+}

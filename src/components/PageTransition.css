@@ -1,0 +1,21 @@
+.page-transition {
+  transition: opacity 0.32s ease, transform 0.32s ease;
+}
+
+.page-transition--enter {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition--exit {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
