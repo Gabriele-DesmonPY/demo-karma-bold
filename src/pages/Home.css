@@ -300,19 +300,126 @@
 .kh-list__item:nth-child(7) { transition-delay: 420ms; }
 .kh-list__item:nth-child(8) { transition-delay: 490ms; }
 
-/* ── Quotes grid ── */
-.kh-quotes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: var(--space-3) var(--space-4);
-  font-family: var(--font-accent), "Instrument Serif", Georgia, serif;
-  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
-  line-height: 1.5;
+/* ── Il filo delle voci — struttura a filo verticale ──
+   Un filo doro attraversa le citazioni: ognuna è un nodo appeso al filo,
+   alternata destra/sinistra (recto/verso). Il filo si disegna dall'alto
+   all'ingresso in viewport; i nodi entrano in stagger via .kh-stagger. */
+.kh-thread {
+  position: relative;
+  max-width: 880px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, 6vh, 60px);
+  padding-block: 12px;
 }
 
-.kh-quotes__item {
+/* Il filo: 1px, sfuma alle estremità, si disegna dall'alto */
+.kh-thread::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  --tx: -50%;
+  transform: translateX(var(--tx)) scaleY(0);
+  transform-origin: top;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(198, 154, 87, 0.6) 7%,
+    rgba(198, 154, 87, 0.6) 93%,
+    transparent
+  );
+  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kh-thread.kh-stagger--visible::before {
+  transform: translateX(var(--tx)) scaleY(1);
+}
+
+/* Nodo: pallino oro sul filo + citazione in Instrument Serif italic */
+.kh-thread__item {
   margin: 0;
-  color: rgba(26, 36, 48, 0.75);
+  display: grid;
+  grid-template-columns: 1fr 32px 1fr;
+  align-items: center;
+}
+
+.kh-thread__dot {
+  grid-column: 2;
+  justify-self: center;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--kh-gold);
+  box-shadow: 0 0 0 4px rgba(198, 154, 87, 0.12);
+}
+
+.kh-thread__text {
+  grid-column: 3;
+  font-family: var(--font-accent), "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.1rem, 1.7vw, 1.45rem);
+  line-height: 1.45;
+  color: rgba(26, 36, 48, 0.78);
+  padding-left: clamp(16px, 3vw, 36px);
+}
+
+.kh-thread__item--sx .kh-thread__text {
+  grid-column: 1;
+  text-align: right;
+  padding-left: 0;
+  padding-right: clamp(16px, 3vw, 36px);
+}
+
+/* Micro-nodo pulsante sul filo: solo opacity, composited, zero jank */
+.kh-thread__pulse {
+  position: absolute;
+  left: 50%;
+  top: 32%;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--kh-gold-bright);
+  box-shadow: 0 0 14px rgba(208, 172, 117, 0.7);
+  transform: translateX(-50%);
+  animation: kh-thread-pulse 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes kh-thread-pulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.9; }
+}
+
+@media (max-width: 640px) {
+  .kh-thread::before {
+    left: 5px;
+    --tx: 0;
+  }
+
+  .kh-thread__pulse {
+    left: 5px;
+    transform: translateX(-50%);
+  }
+
+  .kh-thread__item {
+    grid-template-columns: 20px 1fr;
+  }
+
+  .kh-thread__dot {
+    grid-column: 1;
+  }
+
+  .kh-thread__text,
+  .kh-thread__item--sx .kh-thread__text {
+    grid-column: 2;
+    text-align: left;
+    padding: 0 0 0 6px;
+    font-size: clamp(1.05rem, 4.6vw, 1.3rem);
+  }
 }
 
 /* ── Hero ── */
@@ -384,36 +491,6 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: filter 0.4s var(--ease-snap, ease);
-}
-
-.kh-hero__cta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: clamp(16px, 3vw, 40px);
-  margin-top: clamp(16px, 3vw, 36px);
-}
-
-.kh-hero__cta-link {
-  font-family: var(--font-label);
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--kh-gold);
-  border-bottom: 1px solid rgba(198, 154, 87, 0.5);
-  padding-bottom: 10px;
-  transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
-}
-
-.kh-hero__cta-link:hover {
-  color: var(--kh-gold-bright);
-  border-bottom-color: rgba(208, 172, 117, 0.8);
-}
-
-.kh-hero__cta-note {
-  font-size: 13px;
-  line-height: 1.6;
-  color: rgba(220, 226, 223, 0.55);
 }
 
 /* ── La domanda (sezione pinnata) ── */
@@ -557,7 +634,6 @@
   transform: scaleX(1);
 }
 
-.kh-hero__cta-link::after,
 .kh-closing__link::after {
   display: none;
 }
@@ -587,17 +663,13 @@
   transform: translateY(0);
 }
 
-/* Quotes: lift + glow al passaggio del mouse (spring physics) */
-.kh-quotes__item {
-  transition:
-    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-    opacity 0.35s ease;
+/* Voci sul filo: il testo si accende al passaggio (solo color) */
+.kh-thread__text {
+  transition: color 0.35s ease;
 }
 
-.kh-quotes__item:hover {
-  transform: translateY(-4px) scale(1.02);
-  opacity: 1 !important;
-  color: rgba(26, 36, 48, 0.95);
+.kh-thread__item:hover .kh-thread__text {
+  color: rgba(26, 36, 48, 0.96);
 }
 
 /* Foto: profondità 3D al hover */
@@ -632,19 +704,7 @@
   transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* CTA link: stato attivo con rimbalzo */
-.kh-hero__cta-link {
-  transition:
-    color var(--dur-fast) ease,
-    border-color var(--dur-fast) ease,
-    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.kh-hero__cta-link:active {
-  transform: scale(0.96);
-}
-
-/* Closing link: stesso trattamento spring */
+/* Closing link: trattamento spring */
 .kh-closing__link {
   transition:
     color var(--dur-fast) ease,

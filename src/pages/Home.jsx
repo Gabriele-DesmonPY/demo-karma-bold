@@ -4,7 +4,7 @@ import Reveal from "../components/Reveal";
 import LineReveal from "../components/LineReveal";
 import Spiral from "../components/Spiral";
 import SpiralStage from "../components/SpiralStage";
-import OrbitRing from "../components/OrbitRing";
+import CompetenceMap from "../components/CompetenceMap";
 import DrawLines from "../components/DrawLines";
 import ImageReveal from "../components/ImageReveal";
 import ThreadConductor from "../components/ThreadConductor";
@@ -153,12 +153,6 @@ export default function Home() {
             che verrà. Karma accompagna chi decide a comprenderne le connessioni, riconoscere ciò
             che conta e costruire una direzione coerente con la propria realtà.
           </Reveal>
-          <Reveal as="div" className="kh-hero__cta" delay={200}>
-            <Link to="/contatti" className="kh-hero__cta-link">
-              Conosciamoci →
-            </Link>
-            <span className="kh-hero__cta-note">30 minuti per capire insieme dove siamo.</span>
-          </Reveal>
         </div>
       </section>
 
@@ -170,19 +164,6 @@ export default function Home() {
          Il filo incontra molte verità contemporanee.
          ═══════════════════════════════════════════════════════════════ */}
       <section className="kh-sec-enter kh-sec kh-grad-nc" style={{ "--fade-a": "12%", "--fade-b": "38%" }}>
-        <DrawLines
-          viewBox="0 0 1000 900"
-          paths={[
-            { d: "M60 210 C 300 250, 380 520, 500 780" },
-            { d: "M930 180 C 760 300, 640 520, 500 780" },
-            { d: "M170 420 C 330 480, 420 600, 500 780" },
-            { d: "M840 430 C 700 520, 590 620, 500 780" },
-            { d: "M420 300 C 470 470, 480 600, 500 780" },
-            { d: "M620 250 C 590 450, 540 610, 500 780" },
-            { d: "M250 620 C 350 690, 430 730, 500 780" },
-            { d: "M760 640 C 660 700, 570 740, 500 780" },
-          ]}
-        />
         <div className="kh-col">
           <LineReveal as="h2" className="kh-h2">
             {"Tutto può avere senso.\nPreso separatamente."}
@@ -191,7 +172,10 @@ export default function Home() {
             Quando hai raccolto tutte le risposte e devi ancora scegliere.
           </Reveal>
 
-          <div className="kh-quotes kh-stagger">
+          {/* Il filo delle voci: un filo doro attraversa le sei voci, ognuna
+              appesa come un nodo, alternata destra/sinistra come recto/verso. */}
+          <div className="kh-thread kh-stagger">
+            <span className="kh-thread__pulse" aria-hidden="true" />
             {[
               "Il mercato sta andando lì.",
               "I numeri suggeriscono questo.",
@@ -200,8 +184,9 @@ export default function Home() {
               "Questa tecnologia potrebbe accelerare tutto.",
               "Il cliente chiede altro.",
             ].map((q, i) => (
-              <Reveal as="p" key={q} className="kh-quotes__item" delay={i * 40}>
-                “{q}”
+              <Reveal as="p" key={q} className={`kh-thread__item${i % 2 ? " kh-thread__item--sx" : ""}`} delay={120 + i * 90}>
+                <span className="kh-thread__dot" aria-hidden="true" />
+                <span className="kh-thread__text">“{q}”</span>
               </Reveal>
             ))}
           </div>
@@ -557,11 +542,8 @@ export default function Home() {
             </Reveal>
           </div>
           <Reveal as="div" delay={120}>
-            <OrbitRing
+            <CompetenceMap
               center="LA DECISIONE"
-              radius={42}
-              spin={150}
-              accentIndexes={[7]}
               items={[
                 "STRATEGIA", "ORGANIZZAZIONE", "PROCESSI", "PERSONE", "PROJECT MANAGEMENT",
                 "TECNOLOGIA", "DATI", "AI", "PRIVACY", "DIRITTO", "COMPLIANCE", "MERCATO",
