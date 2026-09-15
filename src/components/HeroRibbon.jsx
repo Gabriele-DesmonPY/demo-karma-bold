@@ -65,12 +65,14 @@ export default function HeroRibbon() {
       const diag = Math.hypot(W, H);
       const half = diag / 2;
 
-      // Base navy: un gradiente verticale ricco, mai piatto
+      // Base navy: gradiente verticale che apre e chiude SUL navy piatto
+      // (--kh-navy #0a2545) — così il passaggio verso la fascia sotto è
+      // continuo, nessuno scarto di tinta né sotto la navbar né in coda.
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       const base = ctx.createLinearGradient(0, 0, 0, H);
-      base.addColorStop(0, "#0d2f5c");
-      base.addColorStop(0.55, "#0a2545");
-      base.addColorStop(1, "#071526");
+      base.addColorStop(0, "#0a2545");
+      base.addColorStop(0.45, "#0d2b51");
+      base.addColorStop(1, "#0a2545");
       ctx.fillStyle = base;
       ctx.fillRect(0, 0, W, H);
 

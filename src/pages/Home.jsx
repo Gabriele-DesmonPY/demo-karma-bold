@@ -10,6 +10,7 @@ import ImageReveal from "../components/ImageReveal";
 import ThreadConductor from "../components/ThreadConductor";
 import AbstractBand from "../components/AbstractBand";
 import HeroRibbon from "../components/HeroRibbon";
+import SilkWash from "../components/SilkWash";
 import useProgressLoop from "../hooks/useProgressLoop";
 import usePageMeta from "../hooks/usePageMeta";
 import { useEffect } from "react";
@@ -166,6 +167,7 @@ export default function Home() {
          Il filo incontra molte verità contemporanee.
          ═══════════════════════════════════════════════════════════════ */}
       <section className="kh-sec-enter kh-sec kh-grad-nc" style={{ "--fade-a": "12%", "--fade-b": "38%" }}>
+        <SilkWash variant="fade-top" start={42} end={64} />
         <div className="kh-col">
           <LineReveal as="h2" className="kh-h2">
             {"Tutto può avere senso.\nPreso separatamente."}
@@ -228,6 +230,7 @@ export default function Home() {
          Il filo lega le cose.
          ═══════════════════════════════════════════════════════════════ */}
       <section className="kh-sec-enter kh-sec kh-grad-cn" style={{ "--fade-a": "58%", "--fade-b": "82%" }}>
+        <SilkWash variant="fade-bottom" start={48} end={78} />
         <DrawLines
           viewBox="0 0 1000 620"
           paths={[
@@ -271,6 +274,7 @@ export default function Home() {
          Il filo si ferma. Un momento di riflessione.
          ═══════════════════════════════════════════════════════════════ */}
       <section className="kh-sec-enter kh-sec kh-grad-nc kh-question" style={{ "--fade-a": "6%", "--fade-b": "18%" }}>
+        <SilkWash variant="fade-top" start={20} end={38} />
         <div className="kh-question__inner">
           <Reveal as="div" className="kh-eyebrow" style={{ color: "var(--kh-gold-deep)" }}>
             Il discernimento abita qui
