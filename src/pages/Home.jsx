@@ -9,6 +9,7 @@ import DrawLines from "../components/DrawLines";
 import ImageReveal from "../components/ImageReveal";
 import ThreadConductor from "../components/ThreadConductor";
 import AbstractBand from "../components/AbstractBand";
+import HeroRibbon from "../components/HeroRibbon";
 import useProgressLoop from "../hooks/useProgressLoop";
 import usePageMeta from "../hooks/usePageMeta";
 import { useEffect } from "react";
@@ -132,6 +133,7 @@ export default function Home() {
          lenta. Il filo inizia qui.
          ═══════════════════════════════════════════════════════════════ */}
       <section className="kh-hero">
+        <HeroRibbon />
         <div className="kh-hero__spiral">
           <div className="kh-hero__spiral-spin">
             <Spiral armsCount={3} goldOpacity={0.75} thinOpacity={0.14} />
