@@ -9,7 +9,7 @@ import DrawLines from "../components/DrawLines";
 import ImageReveal from "../components/ImageReveal";
 import ThreadConductor from "../components/ThreadConductor";
 import AbstractBand from "../components/AbstractBand";
-import HeroRibbon from "../components/HeroRibbon";
+import RibbonField from "../components/RibbonField";
 import SilkWash from "../components/SilkWash";
 import useProgressLoop from "../hooks/useProgressLoop";
 import usePageMeta from "../hooks/usePageMeta";
@@ -128,13 +128,17 @@ export default function Home() {
       <GoldProgress />
       <ThreadConductor />
 
+      {/* Un UNICO campo di nastri fisso dietro a tutta la pagina: ogni
+          zona blu è trasparente e mostra lo stesso campo → continuità
+          totale tra hero, fasce e sezioni, un'onda sola. */}
+      <RibbonField className="kh-backdrop" flatBase intensity={0.9} />
+
       {/* ═══════════════════════════════════════════════════════════════
          1 — HERO
          La matassa: la spirale entra da fuori schermo, grande,
          lenta. Il filo inizia qui.
          ═══════════════════════════════════════════════════════════════ */}
       <section className="kh-hero">
-        <HeroRibbon />
         <div className="kh-hero__spiral">
           <div className="kh-hero__spiral-spin">
             <Spiral armsCount={3} goldOpacity={0.75} thinOpacity={0.14} />
@@ -166,7 +170,7 @@ export default function Home() {
          Merge: "Le molte verità" + "Il contesto"
          Il filo incontra molte verità contemporanee.
          ═══════════════════════════════════════════════════════════════ */}
-      <section className="kh-sec-enter kh-sec kh-grad-nc" style={{ "--fade-a": "12%", "--fade-b": "38%" }}>
+      <section className="kh-sec-enter kh-sec kh-grad-nc kh-grad-open" style={{ "--fade-a": "12%", "--fade-b": "38%" }}>
         <SilkWash variant="fade-top" start={42} end={64} />
         <div className="kh-col">
           <LineReveal as="h2" className="kh-h2">
@@ -229,7 +233,7 @@ export default function Home() {
          3 — DECIDERE È TENERE INSIEME
          Il filo lega le cose.
          ═══════════════════════════════════════════════════════════════ */}
-      <section className="kh-sec-enter kh-sec kh-grad-cn" style={{ "--fade-a": "58%", "--fade-b": "82%" }}>
+      <section className="kh-sec-enter kh-sec kh-grad-cn kh-grad-close" style={{ "--fade-a": "58%", "--fade-b": "82%" }}>
         <SilkWash variant="fade-bottom" start={48} end={78} />
         <DrawLines
           viewBox="0 0 1000 620"
@@ -273,7 +277,7 @@ export default function Home() {
          4 — LA DOMANDA
          Il filo si ferma. Un momento di riflessione.
          ═══════════════════════════════════════════════════════════════ */}
-      <section className="kh-sec-enter kh-sec kh-grad-nc kh-question" style={{ "--fade-a": "6%", "--fade-b": "18%" }}>
+      <section className="kh-sec-enter kh-sec kh-grad-nc kh-grad-open kh-question" style={{ "--fade-a": "10%", "--fade-b": "18%" }}>
         <SilkWash variant="fade-top" start={20} end={38} />
         <div className="kh-question__inner">
           <Reveal as="div" className="kh-eyebrow" style={{ color: "var(--kh-gold-deep)" }}>
@@ -446,7 +450,7 @@ export default function Home() {
          + Poi la scelta comincia a vivere + Ciò che resta
          Il filo rafforza l'impresa e le persone.
          ═══════════════════════════════════════════════════════════════ */}
-      <section className="kh-sec-enter kh-sec" style={{ background: "var(--kh-navy)", color: "var(--kh-cream)" }}>
+      <section className="kh-sec-enter kh-sec kh-flat-navy">
         {/* 9A — Capacità decisionale */}
         <div className="kh-col" style={{ marginBottom: "var(--space-rhythm)" }}>
           <ScrollSpiralDecor from={0.5} to={1.9} rot={-60} opacity={0.3} spin={200} className="kh-lines" />

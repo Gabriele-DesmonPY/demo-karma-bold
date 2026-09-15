@@ -29,7 +29,7 @@ const ANGLE = (32 * Math.PI) / 180; // come l'originale
 // wave 14 → (14/100)·0.35 ≈ 0.05 della diagonale: l'ampiezza dell'onda
 const BEND = 0.05;
 
-export default function HeroRibbon() {
+export default function RibbonField({ className = "", flatBase = false, intensity = 1 }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -65,15 +65,19 @@ export default function HeroRibbon() {
       const diag = Math.hypot(W, H);
       const half = diag / 2;
 
-      // Base navy: gradiente verticale che apre e chiude SUL navy piatto
-      // (--kh-navy #0a2545) — così il passaggio verso la fascia sotto è
-      // continuo, nessuno scarto di tinta né sotto la navbar né in coda.
+      // Base navy: col backdrop fisso è UNIFORME sul navy piatto
+      // (--kh-navy #0a2545) — ogni sezione trasparente mostra esattamente
+      // lo stesso campo, la continuità è garantita ovunque.
       ctx.setTransform(1, 0, 0, 1, 0, 0);
-      const base = ctx.createLinearGradient(0, 0, 0, H);
-      base.addColorStop(0, "#0a2545");
-      base.addColorStop(0.45, "#0d2b51");
-      base.addColorStop(1, "#0a2545");
-      ctx.fillStyle = base;
+      if (flatBase) {
+        ctx.fillStyle = "#0a2545";
+      } else {
+        const base = ctx.createLinearGradient(0, 0, 0, H);
+        base.addColorStop(0, "#0a2545");
+        base.addColorStop(0.45, "#0d2b51");
+        base.addColorStop(1, "#0a2545");
+        ctx.fillStyle = base;
+      }
       ctx.fillRect(0, 0, W, H);
 
       // Campo di nastri nel frame ruotato di ANGLE
@@ -92,8 +96,8 @@ export default function HeroRibbon() {
         const grad = ctx.createLinearGradient(center - bandW / 2, 0, center + bandW / 2, 0);
         const f = 0.3;
         grad.addColorStop(0, `rgba(${s.c[0]},${s.c[1]},${s.c[2]},0)`);
-        grad.addColorStop(f, `rgba(${s.c[0]},${s.c[1]},${s.c[2]},${s.a})`);
-        grad.addColorStop(1 - f, `rgba(${s.c[0]},${s.c[1]},${s.c[2]},${s.a})`);
+        grad.addColorStop(f, `rgba(${s.c[0]},${s.c[1]},${s.c[2]},${s.a * intensity})`);
+        grad.addColorStop(1 - f, `rgba(${s.c[0]},${s.c[1]},${s.c[2]},${s.a * intensity})`);
         grad.addColorStop(1, `rgba(${s.c[0]},${s.c[1]},${s.c[2]},0)`);
         ctx.fillStyle = grad;
 
@@ -161,5 +165,5 @@ export default function HeroRibbon() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="kh-hero__ribbon" aria-hidden="true" />;
+  return <canvas ref={canvasRef} className={`kh-ribbon ${className}`} aria-hidden="true" />;
 }

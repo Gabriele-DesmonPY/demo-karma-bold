@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import "./SilkWash.css";
 
 // SilkWash — dinamismo leggero per le zone chiare della Home.
 //
@@ -15,7 +16,7 @@ import { useEffect, useRef } from "react";
 //    ogni filo dall'alto in basso. Completano il ThreadConductor
 //    (il filo dorato fisso a lato) dentro le sezioni chiare.
 //
-// Performance: stesso schema di HeroRibbon — canvas a risoluzione
+// Performance: stesso schema di RibbonField — canvas a risoluzione
 // ridotta, loop solo in viewport, reduced-motion = un frame fermo.
 
 const PASTEL = [
@@ -115,8 +116,8 @@ export default function SilkWash({ variant = "full", start = 0, end = 100 }) {
         const baseX = th.x * W;
         const grad = ctx.createLinearGradient(0, 0, 0, H);
         grad.addColorStop(0, "rgba(175,129,59,0)");
-        grad.addColorStop(0.12, "rgba(175,129,59,0.34)");
-        grad.addColorStop(0.88, "rgba(175,129,59,0.34)");
+        grad.addColorStop(0.12, "rgba(175,129,59,0.28)");
+        grad.addColorStop(0.88, "rgba(175,129,59,0.28)");
         grad.addColorStop(1, "rgba(175,129,59,0)");
         ctx.strokeStyle = grad;
         ctx.lineWidth = 1.1;

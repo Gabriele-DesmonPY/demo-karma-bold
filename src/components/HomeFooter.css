@@ -4,7 +4,9 @@
 
   position: relative;
   z-index: 1;
-  background: var(--kh-navy);
+  /* Trasparente: sulla Home il RibbonField fisso dà il navy (continuità
+     fino in fondo); il componente è usato solo sulla rotta home. */
+  background: transparent;
   color: rgba(220, 226, 223, 0.45);
   padding: 28px clamp(20px, 5vw, 64px);
   font-size: 11px;
