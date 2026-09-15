@@ -34,9 +34,20 @@
   }
 }
 
+/* La spirale non riceve più trasformazioni dallo scroll: la sua vita è
+   tutta qui — un respiro di scala lentissimo (±4% in 14s), sopra la
+   rotazione continua del wrapper `.spiral-stage__spin`. Nessuno zoom che
+   possa richiamare il "reverse" dell'avvolgimento. */
 .spiral-stage__spiral {
   width: 100%;
   height: 100%;
+  animation: spiral-stage-breathe-scale 14s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes spiral-stage-breathe-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
 }
 
 .spiral-stage__dot {
@@ -68,14 +79,14 @@
   display: grid;
   place-items: center;
   opacity: 0;
-  /* L'opacità/trasformazione è guidata dallo scroll via JS: la transizione
-     fa sì che il valore "insegua" il target con un easing morbido — la
-     parola entra e esce con un'animazione percepita, non un'incollatura
-     lineare al pixel dello scroll. */
+  /* Dissolvenza editoriale: solo opacity + blur, nessuno spostamento.
+     I target sono guidati dallo scroll via JS; la transizione fa sì che il
+     valore "insegua" il target con un easing morbido — il blocco emerge
+     dalla sfocatura e ci ritorna, senza scivolare né sovrapporsi. */
   transition:
-    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, filter;
 }
 
 /* Il primo item resta nel flusso normale (non absolute) per dare al
@@ -112,11 +123,15 @@
     inset: auto;
     opacity: 1 !important;
     transform: none !important;
+    /* Il layout statico mobile mostra tutti i blocchi: nessuna sfocatura
+       residua dagli stili inline guidati dallo scroll. */
+    filter: none !important;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .spiral-stage__spin {
+  .spiral-stage__spin,
+  .spiral-stage__spiral {
     animation: none;
   }
 }

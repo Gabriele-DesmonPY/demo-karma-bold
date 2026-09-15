@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import useProgressLoop from "../hooks/useProgressLoop";
+import "./AbstractBand.css";
 
 // Intermezzo editoriale full-bleed tra le sezioni: una texture astratta
 // trattata in duotone brand (navy/oro) che si dissolve su TUTTI i bordi

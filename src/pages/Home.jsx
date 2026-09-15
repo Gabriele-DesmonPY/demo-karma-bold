@@ -10,6 +10,7 @@ import ThreadConductor from "../components/ThreadConductor";
 import AbstractBand from "../components/AbstractBand";
 import RibbonField from "../components/RibbonField";
 import SilkWash from "../components/SilkWash";
+import ScrollFloat from "../components/ScrollFloat";
 import useProgressLoop from "../hooks/useProgressLoop";
 import usePageMeta from "../hooks/usePageMeta";
 import { useEffect } from "react";
@@ -252,25 +253,22 @@ export default function Home() {
 
       {/* ═══════════════════════════════════════════════════════════════
          5 — ENTRARE NELLA SPIRALE
-         Momento pinnato. Il filo si srotola attraverso le tappe.
+         Le nove tappe del discernimento: ogni parola emerge dal filo
+         lettera per lettera mentre si scorre (ScrollFloat).
          ═══════════════════════════════════════════════════════════════ */}
-      <SpiralStage
-        height="200vh"
-        spiral={{ armsCount: 3, from: 0.62, to: 3.1, rot: 180, opacity: 0.7 }}
-        spin={320}
-        className="kh-grad-spirale-in"
-        items={[
-          { at: 0.02, span: 0.13, content: <span className="kh-h3">ascoltare</span> },
-          { at: 0.13, span: 0.13, content: <span className="kh-h3">osservare</span> },
-          { at: 0.24, span: 0.13, content: <span className="kh-h3">collegare</span> },
-          { at: 0.35, span: 0.13, content: <span className="kh-h3">comprendere</span> },
-          { at: 0.46, span: 0.13, content: <span className="kh-h3">distinguere</span> },
-          { at: 0.57, span: 0.13, content: <span className="kh-h3">interrogare</span> },
-          { at: 0.68, span: 0.13, content: <span className="kh-h3">tradurre</span> },
-          { at: 0.79, span: 0.13, content: <span className="kh-h3">discernere</span> },
-          { at: 0.9, span: 0.13, content: <span className="kh-h3" style={{ color: "var(--kh-gold)" }}>scegliere</span> },
-        ]}
-      />
+      <section className="kh-grad-spirale-in kh-float-sec">
+        <div className="kh-float-stack">
+          <ScrollFloat>ascoltare</ScrollFloat>
+          <ScrollFloat>osservare</ScrollFloat>
+          <ScrollFloat>collegare</ScrollFloat>
+          <ScrollFloat>comprendere</ScrollFloat>
+          <ScrollFloat>distinguere</ScrollFloat>
+          <ScrollFloat>interrogare</ScrollFloat>
+          <ScrollFloat>tradurre</ScrollFloat>
+          <ScrollFloat>discernere</ScrollFloat>
+          <ScrollFloat textClassName="kh-float-word--gold">scegliere</ScrollFloat>
+        </div>
+      </section>
 
       {/* ═══════════════════════════════════════════════════════════════
          6 — ECOLOGIA DELLA DECISIONE
@@ -506,7 +504,7 @@ export default function Home() {
               center="LA DECISIONE"
               items={[
                 "STRATEGIA", "ORGANIZZAZIONE", "PROCESSI", "PERSONE", "PROJECT MANAGEMENT",
-                "TECNOLOGIA", "DATI", "AI", "PRIVACY", "DIRITTO", "COMPLIANCE", "MERCATO",
+                "TECNOLOGIA", "DATI", "PRIVACY", "DIRITTO", "COMPLIANCE", "MERCATO",
               ]}
             />
           </Reveal>

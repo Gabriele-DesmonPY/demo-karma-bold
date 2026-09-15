@@ -177,17 +177,42 @@
   );
 }
 
-/* Uscita dal cream verso il campo animato: niente navy "piatto" di
-   transizione (si vedrebbe come una sezione diversa) — il cream sfuma
-   in trasparente e il RibbonField fisso fa da navy. Distanze in px dal
-   fondo sezione: la discesa vive nell'aria vuota del margine (150px)
-   sotto l'ultimo paragrafo, mai sul testo. */
+/* La domanda (segue la sezione "Decidere è tenere insieme", che ora
+   chiude su navy pieno): anche il suo bordo superiore parte da navy
+   PIENO, non trasparente — così al confine navy→navy il campo dei
+   nastri non riappare di colpo e la continuità è perfetta. Scope solo
+   su .kh-question: l'altra kh-grad-open (ingresso dall'hero) resta
+   com'era. */
+.kh-question.kh-grad-nc.kh-grad-open {
+  background: linear-gradient(
+    var(--kh-navy) 0%,
+    var(--kh-navy) var(--fade-a, 12%),
+    var(--kh-cream) var(--fade-b, 38%),
+    var(--kh-cream) 100%
+  );
+}
+
+/* Uscita dal cream verso il navy: la discesa NON sfuma più in trasparente
+   (dietro si vede il campo dei nastri → banda grigia/blu marmorizzata e
+   frase chiara su blu medio). Ora scende con curva ease (lenta-veloce-lenta)
+   attraverso blu intermedi tutti sulla stessa familia (niente grigi al
+   centro) fino a navy PIENO #0a2545 — lo stesso navy piatto del campo
+   (flatBase) e della sezione seguente. Distanze in px dal fondo sezione:
+   - parte sotto l'ultimo testo scuro (~H-260) e vive nell'aria vuota del
+     margine (150px) sotto l'ultimo paragrafo, mai sul testo;
+   - navy pieno da calc(100% - 115px): la frase finale in kh-cream (che
+     sta ~40-115px dal fondo) arriva già su blu scurissimo, contrasto OK. */
 .kh-grad-cn.kh-grad-close {
   background: linear-gradient(
     var(--kh-cream) 0%,
-    var(--kh-cream) calc(100% - 235px),
-    rgba(10, 37, 69, 0) calc(100% - 120px),
-    rgba(10, 37, 69, 0) 100%
+    var(--kh-cream) calc(100% - 310px),
+    #e6e9ee calc(100% - 272px),
+    #bcc8d7 calc(100% - 230px),
+    #7e97b4 calc(100% - 190px),
+    #3d5a83 calc(100% - 152px),
+    #16305a calc(100% - 131px),
+    var(--kh-navy) calc(100% - 115px),
+    var(--kh-navy) 100%
   );
 }
 

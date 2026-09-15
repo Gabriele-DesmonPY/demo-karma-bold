@@ -3,29 +3,55 @@ import useProgressLoop from "../hooks/useProgressLoop";
 import Spiral from "./Spiral";
 import "./SpiralStage.css";
 
-// Un "momento" pinnato — sezione alta (260-340vh), contenuto agganciato
-// (position:sticky) per un intero schermo mentre si scorre: la spirale
-// scala/ruota con lo scroll e, sopra, un contenuto per volta (parola,
-// blocco) si accende e si spegne mentre il progress avanza — non un
-// carosello, una sequenza che SI ATTRAVERSA scrollando, esattamente come nel
-// riferimento ("Entrare nella spirale", "Il centro"). Una sola lettura del
-// progress per frame (useProgressLoop) guida sia la spirale che i blocchi:
-// stesso principio già in uso in ZoomParallaxIntro/TimelineSpine — mai due
-// stati che possono disallinearsi.
+// Un "momento" pinnato — sezione alta (200-260vh), contenuto agganciato
+// (position:sticky) per un intero schermo mentre si scorre.
 //
-// "items": [{ content, at, span }] — ognuno si dissolve dentro/fuori dentro
-// la finestra [at, at+span] con lo stesso profilo del riferimento (salita
-// 28% della finestra, pieno fino all'82%, discesa nel resto).
+// LA SPIRALE (round 15 settembre 2026 — sezione "Il centro"): non scala più
+// con lo scroll (il vecchio zoom-out from→to veniva letto come il "reverse"
+// dell'animazione della spirale che si avvolge). Ora la spirale ha un
+// comportamento autonomo e costante: ruota lentissima in continuo
+// (keyframes CSS, durata = `spin` secondi a giro) e respira di scala di
+// ±4% con un ciclo lento di 14s — nessuna trasformazione pilotata dallo
+// scroll, quindi nessun richiamo al rimpicciolirsi/srotolarsi.
+//
+// I CONTENUTI ("items": [{ content, at, span }]): niente più scorrimenti o
+// sovrapposizioni — dissolvenza editoriale. Ogni blocco vive nella finestra
+// [at, at+span] del progress: entra con fade + blur→nitido, esce con
+// nitido→blur + fade. Le finestre si sovrappongono? Il blocco successivo
+// "copre" il precedente mentre sale (l'opacità del precedente viene
+// smorzata da quella del seguente): il risultato è una dissolvenza
+// incrociata morbida in cui si legge sempre un blocco alla volta.
+// Gli eventuali valori inutilizzati di `spiral` (from, to, rot) restano
+// accettati ma ignorati, per compatibilità con l'API esistente.
+const FADE = 0.24; // frazione della finestra dedicata a entrata/uscita
+const BLUR_MAX = 9; // px di sfocatura a opacità zero
+
+// Curva di dissolve: entra nella prima frazione FADE, tiene pieno, esce
+// nell'ultima frazione FADE — con smoothstep (t²(3-2t)) invece del lineare,
+// così i bordi della dissolvenza sono morbidi e non meccanici.
+// Se la finestra supera la fine dello stage (at+span ≥ 1) l'ultimo blocco
+// non esce: resta pieno fino a che la sezione non si sgancia.
+function fadeCurve(prog, at, span) {
+  if (span <= 0) return prog >= at ? 1 : 0;
+  const holdsToEnd = at + span >= 1;
+  const d = (prog - at) / span;
+  if (d <= 0) return 0;
+  const smooth = (t) => t * t * (3 - 2 * t);
+  if (d < FADE) return smooth(d / FADE);
+  if (holdsToEnd || d <= 1 - FADE) return 1;
+  if (d < 1) return smooth((1 - d) / FADE);
+  return 0;
+}
+
 export default function SpiralStage({
   height = "280vh",
-  spiral: { armsCount = 3, from = 0.7, to = 2.6, rot = 120, opacity = 0.6, showThin = true, size } = {},
+  spiral: { armsCount = 3, opacity = 0.6, showThin = true, size } = {},
   spin = 340,
   breathingDot = false,
   items = [],
   className = "",
 }) {
   const stageRef = useRef(null);
-  const spiralRef = useRef(null);
   const itemRefs = useRef([]);
 
   const getProgress = () => {
@@ -37,26 +63,38 @@ export default function SpiralStage({
   };
 
   const applyProgress = (p) => {
-    const prog = p === null ? 1 : p;
-    const spiralEl = spiralRef.current;
-    if (spiralEl) {
-      const scale = from + (to - from) * prog;
-      spiralEl.style.transform = `rotate(${(prog * rot).toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+    const itemEls = itemRefs.current;
+    if (p === null) {
+      // Cleanup (loop disabilitato): azzera gli stili inline, il layout
+      // statico (mobile / reduced-motion) riprende il controllo dal CSS.
+      itemEls.forEach((el) => {
+        if (!el) return;
+        el.style.opacity = "";
+        el.style.filter = "";
+      });
+      return;
     }
-    itemRefs.current.forEach((el, i) => {
+
+    // 1) opacità "grezza" di ogni blocco dalla sua finestra...
+    const raw = items.map((it) => fadeCurve(p, it.at, it.span));
+    // 2) ...poi, dal fondo verso la cima, ogni blocco viene smorzato da
+    //    quanto è già visibile il successivo: se due finestre si accavallano
+    //    il precedente sbiadisce mentre il seguente prende fuoco —mai due
+    //    blocchi leggibili insieme, solo una dissolvenza incrociata.
+    const vis = new Array(items.length).fill(0);
+    for (let i = items.length - 1; i >= 0; i--) {
+      const next = i + 1 < items.length ? vis[i + 1] : 0;
+      vis[i] = raw[i] * (1 - next);
+    }
+
+    itemEls.forEach((el, i) => {
       if (!el) return;
-      const it = items[i];
-      const d = (prog - it.at) / it.span;
-      let o;
-      if (d < 0) o = 0;
-      else if (d < 0.28) o = d / 0.28;
-      else if (d < 0.82) o = 1;
-      else if (d < 1.1) o = (1.1 - d) / 0.28;
-      else o = 0;
-      const clamped = Math.min(1, Math.max(0, o));
-      const dc = Math.min(1, Math.max(0, d));
-      el.style.opacity = clamped.toFixed(3);
-      el.style.transform = `translateY(${((1 - dc) * 16).toFixed(1)}px) scale(${(0.97 + 0.03 * dc).toFixed(3)})`;
+      const o = vis[i];
+      el.style.opacity = o.toFixed(3);
+      // Il blur è parte dell'animazione, non un effetto separato: il blocco
+      // "emerge dalla sfocatura" in entrata e ci torna in uscita. Applichiamo
+      // il filtro solo quando serve (sotto la soglia è come pieno).
+      el.style.filter = o > 0.995 ? "none" : `blur(${((1 - o) * BLUR_MAX).toFixed(2)}px)`;
     });
   };
 
@@ -70,7 +108,7 @@ export default function SpiralStage({
           style={size ? { width: size, height: size } : undefined}
         >
           <div className="spiral-stage__spin" style={{ animationDuration: `${spin}s` }}>
-            <div ref={spiralRef} className="spiral-stage__spiral">
+            <div className="spiral-stage__spiral">
               <Spiral armsCount={armsCount} goldOpacity={opacity} showThin={showThin} />
             </div>
           </div>

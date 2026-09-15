@@ -1,0 +1,88 @@
+/* ── AbstractBand — fusione dolce con le sezioni adiacenti ──
+   Gli stili base del componente vivono in Home.css; qui li affiniamo
+   con selettori a specificità maggiore (2 classi) così l'override è
+   indipendente dall'ordine di bundle.
+
+   Tecnica: la texture si dissolve in TRASPARENZA (maschere alpha a
+   gradiente), non con velature colorate. Così il fade è generico:
+   ciò che appare ai bordi è lo sfondo realmente presente dietro la
+   fascia — il navy dei nastri quando la fascia è su sezioni navy
+   (className="kh-flat-navy"), il crema quando è adiacente a sezioni
+   chiare. Nessun colore è "cotto" nella sfumatura.
+
+   Le due maschere (verticale × orizzontale) sono distribuite su due
+   elementi ANNIDATI (__media contiene __layer) invece che combinate
+   con mask-composite su un unico elemento: le maschere si moltiplicano
+   naturalmente lungo la catena di nesting, senza affidarsi a
+   mask-composite (source-in/intersect), che alcuni browser ignorano —
+   e senza di esso i due gradienti vengono uniti in "add", vanificando
+   la dissolvenza e lasciando i tagli duri ai bordi. */
+
+/* Maschera verticale sulla fascia: la texture nasce e muore nel
+   gradualmente su ~30% d'altezza per lato, quindi anche le linee
+   dorate più sfocate non incontrano mai un bordo netto. */
+.kh-abstract-band .kh-abstract-band__media {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 9%,
+    black 28%,
+    black 72%,
+    rgba(0, 0, 0, 0.35) 91%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 9%,
+    black 28%,
+    black 72%,
+    rgba(0, 0, 0, 0.35) 91%,
+    transparent 100%
+  );
+  /* Un solo layer di maschera: il compositing è irrilevante, lo
+     resettiamo esplicitamente per non ereditare interpretazioni
+     ambigue delle dichiarazioni in Home.css. */
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* Maschera orizzontale sul layer interno: annidata dentro __media,
+   si moltiplica con quella verticale e dissolve anche i fianchi. */
+.kh-abstract-band .kh-abstract-band__layer {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 9%,
+    black 91%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 9%,
+    black 91%,
+    transparent 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* Il glow di Home.css velava i bordi con navy semitrasparente: su una
+   fascia navy è invisibile, ma su una fascia adiacente a sezioni
+   chiare/crema costruirebbe un alone scuro. Lo sostituiamo con una
+   vignettatura neutra e bassissima, che smorza la densità verso i
+   bordi su qualunque sfondo senza imporre un colore. */
+.kh-abstract-band .kh-abstract-band__glow {
+  background: radial-gradient(
+    120% 90% at 50% 50%,
+    transparent 58%,
+    rgba(7, 21, 38, 0.12) 100%
+  );
+}
