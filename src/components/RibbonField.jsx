@@ -27,7 +27,7 @@ const STRIPES = [
 
 const ANGLE = (32 * Math.PI) / 180; // come l'originale
 // wave 14 → (14/100)·0.35 ≈ 0.05 della diagonale: l'ampiezza dell'onda
-const BEND = 0.05;
+const BEND = 0.04;
 
 export default function RibbonField({ className = "", flatBase = false, intensity = 1 }) {
   const canvasRef = useRef(null);
@@ -61,7 +61,7 @@ export default function RibbonField({ className = "", flatBase = false, intensit
     const draw = (t) => {
       if (!W || !H) return;
       // wave clock: da 20.75, avanza di 1.2/s — come da ricetta originale
-      const clock = 20.75 + t * 1.2;
+      const clock = 20.75 + t * 0.45;
       const diag = Math.hypot(W, H);
       const half = diag / 2;
 
@@ -94,7 +94,7 @@ export default function RibbonField({ className = "", flatBase = false, intensit
         // Bordi piumati: gradiente lungo l'asse del nastro, trasparente
         // ai margini con la "softness" dell'originale
         const grad = ctx.createLinearGradient(center - bandW / 2, 0, center + bandW / 2, 0);
-        const f = 0.3;
+        const f = 0.42;
         grad.addColorStop(0, `rgba(${s.c[0]},${s.c[1]},${s.c[2]},0)`);
         grad.addColorStop(f, `rgba(${s.c[0]},${s.c[1]},${s.c[2]},${s.a * intensity})`);
         grad.addColorStop(1 - f, `rgba(${s.c[0]},${s.c[1]},${s.c[2]},${s.a * intensity})`);
@@ -106,13 +106,13 @@ export default function RibbonField({ className = "", flatBase = false, intensit
         ctx.beginPath();
         for (let i = 0; i <= SAMPLES; i++) {
           const y = -half + (diag * i) / SAMPLES;
-          const off = bendAmp * Math.sin((y / diag) * 2.4 * 2 * Math.PI + clock);
+          const off = bendAmp * Math.sin((y / diag) * 1.2 * 2 * Math.PI + clock);
           const x = center - bandW / 2 + off;
           i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         }
         for (let i = SAMPLES; i >= 0; i--) {
           const y = -half + (diag * i) / SAMPLES;
-          const off = bendAmp * Math.sin((y / diag) * 2.4 * 2 * Math.PI + clock);
+          const off = bendAmp * Math.sin((y / diag) * 1.2 * 2 * Math.PI + clock);
           ctx.lineTo(center + bandW / 2 + off, y);
         }
         ctx.closePath();

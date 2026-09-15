@@ -5,7 +5,6 @@ import LineReveal from "../components/LineReveal";
 import Spiral from "../components/Spiral";
 import SpiralStage from "../components/SpiralStage";
 import CompetenceMap from "../components/CompetenceMap";
-import DrawLines from "../components/DrawLines";
 import ImageReveal from "../components/ImageReveal";
 import ThreadConductor from "../components/ThreadConductor";
 import AbstractBand from "../components/AbstractBand";
@@ -19,40 +18,6 @@ import abstractAurora from "../assets/photos/abstract-aurora.webp";
 import abstractCorrente from "../assets/photos/abstract-corrente.webp";
 import abstractTopografia from "../assets/photos/abstract-topografia.webp";
 import "./Home.css";
-
-// ── Decorazione spirale scroll-driven ──
-function ScrollSpiralDecor({ from, to, rot, opacity, armsCount = 3, spin = 200, className = "", style }) {
-  const wrapRef = useRef(null);
-  const spiralRef = useRef(null);
-
-  const getProgress = () => {
-    const node = wrapRef.current;
-    if (!node) return 0;
-    const rect = node.getBoundingClientRect();
-    const span = Math.max(1, rect.height - window.innerHeight);
-    return Math.min(1, Math.max(0, -rect.top / span));
-  };
-
-  const applyProgress = (p) => {
-    const el = spiralRef.current;
-    if (!el) return;
-    const prog = p === null ? 1 : p;
-    const scale = from + (to - from) * prog;
-    el.style.transform = `rotate(${(prog * rot).toFixed(2)}deg) scale(${scale.toFixed(3)})`;
-  };
-
-  useProgressLoop(getProgress, applyProgress, true, wrapRef);
-
-  return (
-    <div ref={wrapRef} className={className} style={style} aria-hidden="true">
-      <div style={{ width: "100%", height: "100%", display: "grid", placeItems: "center", animation: `kh-spin ${spin}s linear infinite` }}>
-        <div ref={spiralRef} style={{ width: "70%", height: "70%" }}>
-          <Spiral armsCount={armsCount} goldOpacity={opacity} showThin={false} style={{ width: "100%", height: "100%" }} />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // Hairline dorata fissa in alto: larghezza = progresso di lettura.
 // Un tocco editoriale che misura il percorso senza aggiungere UI.
@@ -171,7 +136,7 @@ export default function Home() {
          Il filo incontra molte verità contemporanee.
          ═══════════════════════════════════════════════════════════════ */}
       <section className="kh-sec-enter kh-sec kh-grad-nc kh-grad-open" style={{ "--fade-a": "12%", "--fade-b": "38%" }}>
-        <SilkWash variant="fade-top" start={42} end={64} />
+        <SilkWash a={38} b={58} c={84} d={98} />
         <div className="kh-col">
           <LineReveal as="h2" className="kh-h2">
             {"Tutto può avere senso.\nPreso separatamente."}
@@ -234,36 +199,25 @@ export default function Home() {
          Il filo lega le cose.
          ═══════════════════════════════════════════════════════════════ */}
       <section className="kh-sec-enter kh-sec kh-grad-cn kh-grad-close" style={{ "--fade-a": "58%", "--fade-b": "82%" }}>
-        <SilkWash variant="fade-bottom" start={48} end={78} />
-        <DrawLines
-          viewBox="0 0 1000 620"
-          paths={[
-            { d: "M120 120 C 300 180, 380 300, 520 330" },
-            { d: "M880 140 C 700 210, 640 300, 520 330" },
-            { d: "M180 430 C 320 400, 420 350, 520 330" },
-            { d: "M820 470 C 700 410, 600 350, 520 330" },
-            { d: "M500 60 C 510 160, 515 260, 520 330" },
-            { d: "M520 330 C 540 430, 560 520, 600 600" },
-          ]}
-        />
+        <SilkWash a={4} b={16} c={42} d={68} />
         <div className="kh-col">
           <LineReveal as="h2" className="kh-h2">
             Decidere è tenere insieme.
           </LineReveal>
-          <Reveal as="p" className="kh-lede" style={{ margin: "32px 0", fontStyle: "normal", color: "var(--kh-ink)", maxWidth: "24ch" }}>
+          <Reveal as="p" className="kh-lede" style={{ margin: "28px 0 48px", fontStyle: "normal", color: "var(--kh-ink)", maxWidth: "24ch" }}>
             Ogni scelta entra nella vita dell'impresa.
           </Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: 48, maxWidth: 980, marginLeft: "auto" }}>
-            <Reveal as="p" className="kh-body kh-body--oncream" style={{ maxWidth: "60ch" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: "clamp(32px, 5vw, 64px)", maxWidth: 980 }}>
+            <Reveal as="p" className="kh-body kh-body--oncream" style={{ maxWidth: "52ch" }}>
               Incontra persone, processi, risorse, responsabilità, mercato. Incontra una storia
               già cominciata e una visione che indica dove andare.
             </Reveal>
-            <Reveal as="p" className="kh-body kh-body--oncream" delay={60} style={{ maxWidth: "60ch" }}>
+            <Reveal as="p" className="kh-body kh-body--oncream" delay={60} style={{ maxWidth: "52ch" }}>
               Persone, visione, mercato, organizzazione, risorse, responsabilità e tempo entrano
               nella stessa trama. Una decisione la attraversa e contribuisce a trasformarla.
             </Reveal>
           </div>
-          <Reveal as="p" className="kh-body kh-body--oncream" delay={100} style={{ margin: "48px 0 64px", maxWidth: "62ch" }}>
+          <Reveal as="p" className="kh-body kh-body--oncream" delay={100} style={{ margin: "44px 0 60px", maxWidth: "56ch" }}>
             Karma accompagna chi decide a leggere queste connessioni, attraversarne le
             conseguenze e riconoscere la direzione coerente con la propria realtà.
           </Reveal>
@@ -278,7 +232,7 @@ export default function Home() {
          Il filo si ferma. Un momento di riflessione.
          ═══════════════════════════════════════════════════════════════ */}
       <section className="kh-sec-enter kh-sec kh-grad-nc kh-grad-open kh-question" style={{ "--fade-a": "10%", "--fade-b": "18%" }}>
-        <SilkWash variant="fade-top" start={20} end={38} />
+        <SilkWash a={16} b={32} c={86} d={98} />
         <div className="kh-question__inner">
           <Reveal as="div" className="kh-eyebrow" style={{ color: "var(--kh-gold-deep)" }}>
             Il discernimento abita qui
@@ -453,7 +407,11 @@ export default function Home() {
       <section className="kh-sec-enter kh-sec kh-flat-navy">
         {/* 9A — Capacità decisionale */}
         <div className="kh-col" style={{ marginBottom: "var(--space-rhythm)" }}>
-          <ScrollSpiralDecor from={0.5} to={1.9} rot={-60} opacity={0.3} spin={200} className="kh-lines" />
+          <div className="kh-lines" aria-hidden="true">
+            <div style={{ width: "100%", height: "100%", display: "grid", placeItems: "center", animation: "kh-spin 200s linear infinite" }}>
+              <Spiral armsCount={3} goldOpacity={0.3} showThin={false} style={{ width: "70%", height: "70%" }} />
+            </div>
+          </div>
           <Reveal as="div" className="kh-eyebrow">Il tempo della decisione</Reveal>
           <LineReveal as="h2" className="kh-h2">
             {"Le decisioni di oggi\neducano il modo in cui sceglieremo domani."}
@@ -489,14 +447,6 @@ export default function Home() {
 
         {/* 9B — Accompagnamento */}
         <div className="kh-col" style={{ marginBottom: "var(--space-rhythm)" }}>
-          <DrawLines
-            viewBox="0 0 600 400"
-            paths={[
-              { d: "M-20 90 C 160 110, 210 210, 320 205 S 480 250, 620 230", stroke: "var(--kh-ink)", opacity: 0.45 },
-              { d: "M-20 330 C 150 320, 220 220, 320 215 S 470 190, 620 200", stroke: "var(--kh-gold)", opacity: 0.9 },
-              { d: "M-20 200 C 170 180, 230 250, 330 240 S 460 300, 620 300", stroke: "var(--kh-line)", opacity: 1 },
-            ]}
-          />
           <LineReveal as="h2" className="kh-h2" style={{ maxWidth: "20ch", marginBottom: 56 }}>
             Decidere è un atto che si attraversa insieme.
           </LineReveal>
@@ -523,9 +473,9 @@ export default function Home() {
                 </span>
               </Reveal>
             </div>
-            <Reveal as="div" delay={100}>
+            <div>
               <Spiral armsCount={3} goldOpacity={0.25} showThin={false} style={{ maxWidth: 320, marginInline: "auto" }} />
-            </Reveal>
+            </div>
           </div>
         </div>
 

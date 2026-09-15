@@ -596,31 +596,43 @@
 
 .kh-closing__link {
   display: inline-block;
-  font-family: var(--font-accent), "Instrument Serif", Georgia, serif;
-  font-size: var(--text-h1);
-  line-height: 1.05;
+  font-family: var(--font-display), "Plus Jakarta Sans", sans-serif;
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-display);
-  color: var(--kh-gold);
-  border-bottom: 1px solid rgba(198, 154, 87, 0.45);
-  padding-bottom: 14px;
-  transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
-  background: linear-gradient(
-    100deg,
-    var(--kh-gold) 30%,
-    var(--kh-gold-bright) 50%,
-    var(--kh-gold) 70%
-  );
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: filter 0.4s var(--ease-snap, ease);
+  color: var(--kh-navy);
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--kh-gold-bright) 0%, var(--kh-gold) 55%, var(--kh-gold-deep) 100%);
+  padding: 20px 44px;
+  border-radius: 999px;
+  box-shadow:
+    0 6px 24px rgba(198, 154, 87, 0.35),
+    0 2px 8px rgba(7, 21, 38, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition:
+    transform 0.35s var(--ease-snap, ease),
+    box-shadow 0.35s var(--ease-snap, ease),
+    filter 0.35s var(--ease-snap, ease);
+  will-change: transform;
 }
 
 .kh-closing__link:hover {
-  filter: brightness(1.18);
-  border-bottom-color: rgba(208, 172, 117, 0.7);
+  transform: translateY(-3px);
+  filter: brightness(1.08);
+  box-shadow:
+    0 14px 36px rgba(198, 154, 87, 0.45),
+    0 4px 12px rgba(7, 21, 38, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.kh-closing__link:focus-visible {
+  outline: 2px solid var(--kh-gold-bright);
+  outline-offset: 4px;
+}
+
+.kh-closing__link:active {
+  transform: translateY(-1px);
 }
 
 .kh-closing__notes {

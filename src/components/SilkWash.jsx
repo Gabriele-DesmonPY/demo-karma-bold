@@ -32,7 +32,7 @@ const THREADS = [
   { x: 0.84, amp: 18, freq: 2.7, phase: 4.4, dotSpeed: 38, dotOff: 0.75 },
 ];
 
-export default function SilkWash({ variant = "full", start = 0, end = 100 }) {
+export default function SilkWash({ a = 0, b = 10, c = 90, d = 100 }) {
   const canvasRef = useRef(null);
   const wrapRef = useRef(null);
 
@@ -190,17 +190,11 @@ export default function SilkWash({ variant = "full", start = 0, end = 100 }) {
     };
   }, []);
 
-  // Maschera: dove la sezione è ancora navy il wash resta trasparente
-  let mask;
-  if (variant === "fade-top") {
-    const v = `linear-gradient(to bottom, transparent 0%, transparent ${start}%, black ${end}%, black 100%)`;
-    mask = { WebkitMaskImage: v, maskImage: v };
-  } else if (variant === "fade-bottom") {
-    const v = `linear-gradient(to bottom, black 0%, black ${start}%, transparent ${end}%, transparent 100%)`;
-    mask = { WebkitMaskImage: v, maskImage: v };
-  } else {
-    mask = undefined;
-  }
+  // Maschera a 4 fermate: trasparente ai bordi, pieno al centro.
+  // Sfumando SU e GIÙ il velo torna cream puro ai confini di sezione:
+  // nessuno scarto di tinta con le sezioni vicine.
+  const v = `linear-gradient(to bottom, transparent 0%, transparent ${a}%, black ${b}%, black ${c}%, transparent ${d}%, transparent 100%)`;
+  const mask = { WebkitMaskImage: v, maskImage: v };
 
   return (
     <div ref={wrapRef} className="silk-wash" style={mask} aria-hidden="true">
